@@ -1,0 +1,27 @@
+IMAPAccount  ${_NAME}
+HOST         ${_IMAP}
+User         ${_USER}
+Pass         ${_PASSWORD}
+
+IMAPStore    ${_NAME}-remote
+Account      ${_NAME}
+
+MaildirStore ${_NAME}-local
+Path         ~/.maildir/${_NAME}/
+Inbox        ~/.maildir/${_NAME}/Inbox
+Subfolders   Verbatim
+
+Channel      ${_NAME}-inbox
+Master       :${_NAME}-remote:INBOX
+Slave        :${_NAME}-local:Inbox
+Create       Both
+Expunge      Both
+SyncState    *
+
+Channel      ${_NAME}-others
+Master       :${_NAME}-remote:
+Slave        :${_NAME}-local:
+Patterns     * !INBOX !Inbox
+Create       Both
+Expunge      Both
+SyncState    *

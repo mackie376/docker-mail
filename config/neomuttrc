@@ -1,0 +1,193 @@
+# paths --------------------------------------------------------------------
+
+set folder           = "~/.maildir"
+set header_cache     = "~/.cache/neomutt/headers"
+set message_cachedir = "~/.cache/neomutt/bodies"
+set tmpdir           = "~/.cache/neomutt/tmp"
+set mailcap_path     = "~/.config/neomutt/mailcap"
+
+# basic options ------------------------------------------------------------
+
+set beep_new           = no
+set confirmappend      = no
+set delete
+set mail_check         = 3
+set mail_check_stats
+set mark_old           = no
+set mbox_type          = Maildir
+set move               = no
+set quit               = ask-yes
+set resolve            = yes
+set rfc2047_parameters = yes
+set thorough_search
+set timeout            = 3
+set wait_key           = no
+
+# compose view options -----------------------------------------------------
+
+set askcc
+set attribution
+set edit_headers
+set editor        = 'vim'
+set envelope_from
+set fast_reply
+set fcc_attach
+set forward_decode
+set forward_format = "Fwd: %s"
+set forward_quote
+set include
+set mime_forward   = no
+set reply_to
+set reverse_name
+set sig_dashes
+set text_flowed
+
+# formats ------------------------------------------------------------------
+
+set charset         = 'utf-8'
+set date_format     = "%d.%m.%Y %H:%M"
+set index_format    = "[%Z] %?X?A&-? %D %-20.20F %s"
+set quote_regexp    = "^( {0,4}[>|:#%]| {0,4}[a-z0-9]+[>|]+)+"
+set reply_regexp    = "^(([Rr][Ee]?(\[[0-9]+\])?: *)?(\[[^]]+\] *)?)*"
+set send_charset    = 'utf-8:iso-2022-jp:euc-jp:shift_jis:us-ascii'
+set sort            = threads
+set sort_aux        = reverse-last-date-received
+set sort_re
+set status_chars    = " *%A"
+set status_format   = "[ Folder: %f ] [%r%m messages%?n? (%n new)?%?d? (%d to delete)?%?t? (%t tagged)? ]%>-%?p?( %p postponed )?"
+set uncollapse_jump
+
+# pager view options -------------------------------------------------------
+
+set assumed_charset   = "iso-2022-jp:utf-8:euc-jp:shift_jis"
+set markers           = no
+set menu_scroll
+set pager_context     = 3
+set pager_index_lines = 10
+set pager_stop
+set tilde
+
+alternative_order text/plain text/html *
+auto_view text/html
+
+# e-mail headers and attachments -------------------------------------------
+
+ignore             *
+unignore           from: to: cc: bcc: date: subject:
+unhdr_order        *
+hdr_order          from: to: cc: bcc: date: subject:
+alternative_order  text/plain text/enriched text/html
+auto_view          text/html
+
+# sidebar patch config -----------------------------------------------------
+
+set sidebar_delim_chars   = '/'
+set sidebar_divider_char  = ' | '
+set sidebar_folder_indent
+set sidebar_format        = " %B %* [%?N?%N / ?%S]"
+set sidebar_indent_string = '  '
+set sidebar_short_path
+set sidebar_visible
+set sidebar_width         = 35
+
+# virtual mailbox ----------------------------------------------------------
+
+set nm_default_uri = "notmuch:///home/mackie/.maildir"
+set virtual_spoolfile = no
+
+# key bindings -------------------------------------------------------------
+
+## index & pager
+bind index,pager \Cb  half-up
+bind index,pager \Cf  half-down
+bind index,pager @    compose-to-sender
+bind index,pager C    mail
+bind index,pager D    purge-message
+bind index,pager R    group-reply
+bind index,pager Z    noop
+bind index,pager g    noop
+bind index,pager k    previous-entry
+bind index,pager j    next-entry
+bind index,pager m    noop
+bind index,pager p    recall-message
+bind index,pager x    sync-mailbox
+bind index,pager z    noop
+
+## index
+bind index G          last-entry
+bind index J          sidebar-next
+bind index K          sidebar-prev
+bind index L          sidebar-open
+bind index gg         first-entry
+
+## pager
+bind pager G          bottom
+bind pager K          previous-line
+bind pager J          next-line
+bind pager gg         top
+
+## editor
+bind editor <tab>     complete-query
+
+## compose
+bind compose P        postpone-message
+
+## macros
+macro index,pager $  "<shell-escape>mbsync -a; notmuch new<enter>" "run mbsync to sync all message"
+macro index,pager b  "<change-vfolder>?"
+macro index,pager c  "<change-folder>?"
+macro index,pager s  "<vfolder-from-query>"
+
+# colors -------------------------------------------------------------------
+
+## basic
+color normal      white default
+color error       red default
+color tilde       black default
+color message     cyan default
+color markers     red white
+color attachment  white default
+color search      brightmagenta default
+color indicator   brightblack cyan
+color tree green  default
+
+## status
+color status  white default
+
+## sidebar
+color sidebar_new  default blue
+
+## index
+color index  red default "~A"
+color index  brightred default "~E"
+color index  blue default "~N"
+color index  blue default "~O"
+color index  brightmagenta default "~Q"
+color index  white default "~R"
+color index  blue default "~U"
+color index  brightyellow default "~v"
+color index  brightyellow default "~P"
+color index  red default "~F"
+color index  black red "~D"
+
+## sidebar
+color sidebar_ordinary  white default
+color sidebar_new       blue default
+
+## message headers
+color hdrdefault  brightgreen default
+color header      brightyellow default "^(From)"
+color header      blue default "^(Subject)"
+
+## body
+color quoted     blue default
+color quoted1    cyan default
+color quoted2    yellow default
+color quoted3    red default
+color quoted4    brightred default
+color signature  brightblack default
+color bold       black default
+color underline  black default
+color normal     default default
+
+# accounts -----------------------------------------------------------------

@@ -1,0 +1,43 @@
+# vim:filetype=neomuttrc
+
+# general ------------------------------------------------------------------
+
+set realname = "${_REALNAME}"
+set from = "${_ADDR}"
+set sendmail = "/usr/bin/msmtp --account=${_NAME}"
+
+# folders ------------------------------------------------------------------
+
+set spoolfile = "+${_NAME}/Inbox"
+set postponed = "+${_NAME}/Drafts"
+set record = "+${_NAME}/Sent"
+set trash = "+${_NAME}/Trash"
+
+# signature ----------------------------------------------------------------
+
+${_SIGNATURE}
+
+# macros -------------------------------------------------------------------
+
+macro index,pager d \
+  "<enter-command>set resolve=no<enter><clear-flag>n<enter-command>set resolve=yes<enter><delete-message>" \
+  "mark as read and delete message"
+macro index,pager ma \
+  "<enter-command>set resolve=no<enter><clear-flag>n<enter-command>set resolve=yes<enter><save-message>+${_NAME}/Action<enter>" \
+  "mark as read and move to Action folder"
+macro index,pager mi \
+  "<enter-command>set resolve=no<enter><clear-flag>n<enter-command>set resolve=yes<enter><save-message>+${_NAME}/Inbox<enter>" \
+  "mark as read and move to Inbox folder"
+macro index,pager mh \
+  "<enter-command>set resolve=no<enter><clear-flag>n<enter-command>set resolve=yes<enter><save-message>+${_NAME}/Hold<enter>" \
+  "mark as read and move to Hold folder"
+macro index,pager mm \
+  "<enter-command>set resolve=no<enter><clear-flag>n<enter-command>set resolve=yes<enter><save-message>?" \
+  "mark as read and move to any folder"
+macro index,pager mr \
+  "<enter-command>set resolve=no<enter><clear-flag>n<enter-command>set resolve=yes<enter><save-message>+${_NAME}/Archive<enter>" \
+  "mark as read and move to Archive folder"
+
+# virtual mailbox ----------------------------------------------------------
+
+virtual-mailboxes "Deleted more than 30 days ago in ${_NAME}" "notmuch://?query=folder:work/Trash and date:...<-30days>"
